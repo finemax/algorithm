@@ -70,6 +70,17 @@ status_t list_traverse(link_list_t L)
 	return OK;
 }
 
+status_t list_traverse_limit(link_list_t L, int n)
+{
+	int i = 0;
+	link_list_t p = L->next;
+	while(p && i < n) {
+		visit(p->data);
+		p = p->next;
+		i++;
+	}
+	return OK;
+}
 status_t get_elem(link_list_t L, int i, elem_type_t *e)
 {
 	int j;
@@ -366,23 +377,23 @@ int main(void)
 	while(opp != '0') {
 		scanf("%c", &opp);
 		switch(opp){
-			case '1':
+			case 1:
 				create_list_head(&L, 10);
 				printf("list create (head)\n");
 				list_traverse(L);
 				printf("\n");
 				break;
-			case '2':
+			case 2:
 				create_list_tail(&L, 10);
 				printf("list create (tail)\n");
 				list_traverse(L);
 				printf("\n");
 				break;
-			case '3':
+			case 3:
 				list_traverse(L);
 				printf("\n");
 				break;
-			case '4':
+			case 4:
 				printf("which node to insert");
 				scanf("%d", &pos);
 				printf("nod value to insert");
@@ -391,21 +402,21 @@ int main(void)
 				list_traverse(L);
 				printf("\n");
 				break;
-			case '5':
+			case 5:
 				printf("which node to delete");
 				scanf("%d", &pos);
 				list_delete(&L, pos, &e);
 				printf("delete num %d node done, curren list: \n", pos);
 				list_traverse(L);
 				printf("\n");
-			case '6':
+			case 6:
 				printf("which node to get");
 				scanf("%d", &pos);
 				get_elem(L, pos, &e);
 				printf("num %d node value: %d\n", pos,e);
 				printf("\n");
 				break;
-			case '7':
+			case 7:
 				printf("input data to find");
 				scanf("%d", &pos);
 				k = locate_elem(L, pos);
@@ -417,19 +428,56 @@ int main(void)
 				}
 				printf("\n");
 				break;
-			case '8':
+			case 8:
 				i = clear_list(&L);
 				printf("\n after list cleared: list_length(L) = %d\n", list_length(L));
 				list_traverse(L);
 				printf("\n");
 				break;
-			case '9':
+			case 9:
 				list_reverse2(L);
 				printf("\n after reverse\n");
 				list_traverse(L);
 				printf("\n");
 				break;
-			case '0':
+			case 10:
+				printf("which node value from tail to find");
+				scanf("%d", &value);
+				get_n_th_node_from_tail(L, value, &e);
+				printf("%d node value from tail is: %d\n", value, e);
+				printf("\n");
+				break;
+			case 11:
+				get_mid_node(L, &e);
+				printf("the mid node value is: %d\n", e);
+				printf("\n");
+				break;
+			case 12:
+				if(has_loop(L)) {
+					printf("method 1: has loop\n");
+				} else {
+					printf("method 1: no loop\n");
+				}
+				if(has_loop2(L)) {
+					printf("method 2: has loop\n");
+				} else {
+					printf("method 2: no loop\n");
+				}
+				printf("\n");
+				break;
+			case 13:
+				printf("which node to build loop");
+				scanf("%d", &pos);
+				build_list_loop(&L, pos);
+				list_traverse_limit(L, 20);
+				printf("\n");
+				break;
+			case 14:
+				remove_dup_node(L);
+				list_traverse(L);
+				printf("\n");
+				break;
+			case 0:
 				exit(0);
 		}
 	}
